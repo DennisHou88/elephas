@@ -35,17 +35,18 @@ def to_java_rdd(jsc, features, labels, batch_size):
     return jsc.parallelize(data_sets)
 
 
-def to_simple_rdd(sc, features, labels):
+def to_simple_rdd(sc, features, labels, numPartition):
     """Convert numpy arrays of features and labels into
     an RDD of pairs.
 
     :param sc: Spark context
     :param features: numpy array with features
     :param labels: numpy array with labels
+    :param numPartition: number of rdd partitions
     :return: Spark RDD with feature-label pairs
     """
     pairs = [(x, y) for x, y in zip(features, labels)]
-    return sc.parallelize(pairs)
+    return sc.parallelize(pairs, numPartition)
 
 
 def to_labeled_point(sc, features, labels, categorical=False):
